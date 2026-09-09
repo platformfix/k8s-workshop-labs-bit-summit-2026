@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: multi-label-service-v2
+spec:
+  selector:
+    app: multi-label
+    tier: backend
+    version: v2
+  ports:
+    - port: 80
+      targetPort: 5678

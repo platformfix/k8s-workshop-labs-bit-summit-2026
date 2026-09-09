@@ -1,0 +1,19 @@
+# The Retain class that retain-pvc.yaml claims against. Apply this first.
+#
+# The lab creates the class rather than borrowing one from the cloud, because
+# most clouds only give you a Delete class and this lab demonstrates the
+# opposite: delete the claim, and the disk underneath survives.
+#
+# reclaimPolicy is a StorageClass field, so it is yours to set whatever the
+# driver underneath is. To run this somewhere other than the workshop cluster,
+# change `provisioner` to your own cluster's CSI driver. Run `kubectl get
+# storageclass -o custom-columns=NAME:.metadata.name,PROVISIONER:.provisioner`
+# lists what you have.
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: civo-volume-retain
+provisioner: csi.civo.com
+reclaimPolicy: Retain
+volumeBindingMode: WaitForFirstConsumer
+allowVolumeExpansion: true

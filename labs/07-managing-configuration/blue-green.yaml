@@ -1,0 +1,71 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: blue
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: color
+  namespace: blue
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: color
+  template:
+    metadata:
+      labels:
+        app: color
+    spec:
+      containers:
+      - name: color
+        image: ghcr.io/platformfix/colour
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: color
+  namespace: blue
+spec:
+  selector:
+    app: color
+  ports:
+  - port: 80
+    targetPort: 8080
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: green
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: color
+  namespace: green
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: color
+  template:
+    metadata:
+      labels:
+        app: color
+    spec:
+      containers:
+      - name: color
+        image: ghcr.io/platformfix/colour
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: color
+  namespace: green
+spec:
+  selector:
+    app: color
+  ports:
+  - port: 80
+    targetPort: 8080

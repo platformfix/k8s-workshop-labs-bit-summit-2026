@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: log-collector
+  labels:
+    app: log-collector
+spec:
+  selector:
+    matchLabels:
+      app: log-collector
+  template:
+    metadata:
+      labels:
+        app: log-collector
+    spec:
+      containers:
+        - name: collector
+          image: busybox:1.28
+          env:
+            # Inside a Pod, hostname is the Pod name. The node it landed on
+            # comes from the downward API.
+            - name: NODE_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: spec.nodeName
+          command:
+            - /bin/sh
+            - -c
+            - >
+              while true; do
+                echo "Collecting logs from node $NODE_NAME at $(date)"
+                # In a real scenario, we'd collect logs here
+                sleep 60
+              done
+          volumeMounts:
+            - name: varlog
+              mountPath: /var/log
+              readOnly: true
+          resources:
+            limits:
+              memory: "100Mi"
+              cpu: "100m"
+            requests:
+              memory: "50Mi"
+              cpu: "50m"
+      volumes:
+        - name: varlog
+          hostPath:
+            path: /var/log

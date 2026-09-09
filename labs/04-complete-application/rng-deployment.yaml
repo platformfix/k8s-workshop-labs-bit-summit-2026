@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rng
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: rng
+  template:
+    metadata:
+      labels:
+        app: rng
+    spec:
+      containers:
+        - name: rng
+          image: ghcr.io/platformfix/k8coins-rng:v0.2.1
+          envFrom:
+            - configMapRef:
+                name: k8coins-config
+          ports:
+            - containerPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: rng
+spec:
+  selector:
+    app: rng
+  ports:
+    - port: 80
+      targetPort: 80

@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: xfs-pvc
+spec:
+  accessModes:
+    - ReadWriteOnce
+  # This one needs a cluster whose CSI driver lets a StorageClass choose the
+  # filesystem. The workshop cluster is not one: csi.civo.com formats and
+  # mounts every volume ext4 whatever the class asks for, so there is no XFS
+  # class to name and no way to create one. The class below is DigitalOcean's,
+  # where this does work. See the README.
+  storageClassName: do-block-storage-xfs
+  resources:
+    requests:
+      storage: 1Gi

@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: comparison-deployment
+  labels:
+    app: comparison
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: comparison
+  template:
+    metadata:
+      labels:
+        app: comparison
+    spec:
+      containers:
+        - name: busybox
+          image: busybox:1.28
+          command:
+            - /bin/sh
+            - -c
+            - "while true; do echo Running on $(hostname); sleep 300; done"
+          resources:
+            limits:
+              memory: "64Mi"
+              cpu: "100m"
+            requests:
+              memory: "32Mi"
+              cpu: "50m"
