@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: retain-pod
+spec:
+  containers:
+    - name: retain-container
+      image: busybox:1.38.0
+      command: ["sleep", "3600"]
+      volumeMounts:
+        - mountPath: "/data"
+          name: retain-volume
+  volumes:
+    - name: retain-volume
+      persistentVolumeClaim:
+        claimName: retain-pvc

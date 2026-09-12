@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: xfs-demo-pod
+spec:
+  containers:
+    - name: fs-check-container
+      image: busybox:1.38.0
+      command: ["sleep", "3600"]
+      volumeMounts:
+        - mountPath: "/data"
+          name: xfs-volume
+  volumes:
+    - name: xfs-volume
+      persistentVolumeClaim:
+        claimName: xfs-pvc

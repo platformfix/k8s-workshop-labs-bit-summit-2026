@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rbac-test-app
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: rbac-test-app
+  template:
+    metadata:
+      labels:
+        app: rbac-test-app
+    spec:
+      serviceAccountName: app-sa
+      containers:
+        - name: nginx
+          image: nginx:1.31.3
+          ports:
+            - containerPort: 80

@@ -1,0 +1,9 @@
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: default-deny-ingress
+  namespace: netpol-test
+spec:
+  podSelector: {}  # Matches all pods in the namespace
+  policyTypes:
+    - Ingress

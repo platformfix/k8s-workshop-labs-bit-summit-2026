@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: troubleshoot-pod
+spec:
+  serviceAccountName: troubleshoot-sa
+  containers:
+    - name: kubectl-container
+      image: alpine/kubectl:1.36.3
+      command: ["sleep", "3600"]

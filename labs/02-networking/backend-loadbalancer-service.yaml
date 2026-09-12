@@ -1,0 +1,19 @@
+# Applying this costs money on a cloud cluster. On kind or Docker Desktop
+# nothing can provision a load balancer, so the Service sits in Pending
+# harmlessly. On a cloud it succeeds: the workshop cluster runs on Civo, which
+# has no ServiceLB, so civo-ccm creates a real Civo load balancer and bills for
+# it. Nobody has measured the cost, so treat it as real.
+#
+# `kubectl delete svc backend-loadbalancer` removes it. Check your provider's
+# console afterwards rather than assuming. See the README.
+apiVersion: v1
+kind: Service
+metadata:
+  name: backend-loadbalancer
+spec:
+  selector:
+    app: backend
+  ports:
+    - port: 80
+      targetPort: 5678
+  type: LoadBalancer
