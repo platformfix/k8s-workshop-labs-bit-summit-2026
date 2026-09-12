@@ -13,7 +13,7 @@ spec:
         app: rng
     spec:
       containers:
-        - name: rng
+        - name: k8coins-rng
           image: ghcr.io/platformfix/k8coins-rng:v0.5.0
           ports:
             - containerPort: 80

@@ -12,7 +12,7 @@ spec:
         app: worker
     spec:
       containers:
-        - name: worker
+        - name: k8coins-worker
           image: ghcr.io/platformfix/k8coins-worker:v0.4.1
   strategy:
     rollingUpdate:
